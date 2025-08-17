@@ -34,17 +34,30 @@
         
         header {
             background-color: white;
-            padding: 1rem;
+            padding: 1rem 2rem;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             position: sticky;
             top: 0;
             z-index: 100;
             display: flex;
             align-items: center;
+            gap: 1rem;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
         
         .logo-img {
-            height: 50px;
+            height: 40px;
+        }
+        
+        .site-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--teal);
         }
         
         .password-overlay {
@@ -236,9 +249,11 @@
 </head>
 <body>
     <header>
-        <img src="FIVESPACE LMS LOGO.png" alt="FiveSpace LMS" class="logo-img">
+        <div class="logo-container">
+            <img src="FIVESPACE LMS LOGO.png" alt="FiveSpace LMS" class="logo-img">
+            <div class="site-title">FiveSpace LMS</div>
+        </div>
     </header>
-    
     <!-- Main Password Screen -->
     <div class="password-container" id="password-screen">
         <div class="password-box">
