@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FiveSpace LMS - Architecture Courses</title>
+    <link rel="icon" href="FIVESPACE LMS LOGO.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sand: #E8E5DF;
+            --teal: #008B8B;
+            --accent: #FF6B6B;
+            --dark: #333333;
+            --error: #FF5252;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Quicksand', sans-serif;
+        }
+        
+        body {
+            background: var(--sand);
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            line-height: 1.6;
+        }
+        
+        /* Password Screen */
+        .password-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--sand);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .password-box {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+        
+        .password-box h2 {
+            color: var(--teal);
+            margin-bottom: 1rem;
+        }
+        
+        .password-box input {
+            width: 100%;
+            padding: 0.8rem;
+            margin: 1rem 0;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .password-box button {
+            background: var(--teal);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .error {
+            color: var(--error);
+            margin-top: 0.5rem;
+            display: none;
+        }
+        
+        /* Main Content (hidden initially) */
+        .main-content {
+            display: none;
+        }
+        
+        /* Header */
+        header {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .logo img {
+            height: 40px;
+        }
+        
+        .logo h1 {
+            font-size: 1.5rem;
+            color: var(--teal);
+        }
+        
+        nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        nav a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        nav a:hover {
+            color: var(--teal);
+        }
+        
+        .announcement {
+            background: rgba(0, 139, 139, 0.1);
+            padding: 0.8rem;
+            border-radius: 6px;
+            font-size: 0.95rem;
+        }
+        
+        .zahan-link {
+            color: var(--accent);
+            font-weight: 700;
+            text-decoration: none;
+        }
+        
+        /* Main Content */
+        .main {
+            flex: 1;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .hero h2 {
+            font-size: 2.5rem;
+            color: var(--teal);
+            margin-bottom: 1rem;
+        }
+        
+        /* Courses */
+        .course {
+            margin-bottom: 3rem;
+        }
+        
+        .course h3 {
+            color: var(--teal);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .videos {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .video {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .video-thumb {
+            position: relative;
+            padding-bottom: 56.25%;
+            background: #D2CFC9;
+        }
+        
+        .video-thumb img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .video-info {
+            padding: 1rem;
+        }
+        
+        .video-info h4 {
+            color: var(--teal);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Footer */
+        footer {
+            background: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            color: var(--dark);
+            text-decoration: none;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-top {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .videos {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Password Protection Screen -->
+    <div class="password-screen" id="passwordScreen">
+        <div class="password-box">
+            <h2>FiveSpace LMS</h2>
+            <p>Enter your access password to continue</p>
+            <input type="password" id="passwordInput" placeholder="Your password">
+            <button onclick="checkPassword()">Access Courses</button>
+            <p class="error" id="errorMsg">Incorrect password. Please try again.</p>
+            <p class="announcement" style="margin-top: 1rem;">
+                Purchase courses at <a href="https://zahanstore.com" class="zahan-link" target="_blank">Zahan Store®</a> to get your password
+            </p>
+        </div>
+    </div>
+    
+    <!-- Main Content (hidden until password entered) -->
+    <div class="main-content" id="mainContent">
+        <header>
+            <div class="header-top">
+                <div class="logo">
+                    <img src="FIVESPACE LMS LOGO.png" alt="FiveSpace LMS">
+                    <h1>FiveSpace LMS</h1>
+                </div>
+                
+                <nav>
+                    <a href="#courses">Courses</a>
+                    <a href="#about">About</a>
+                    <a href="#contact">Contact</a>
+                    <a href="#faq">FAQ</a>
+                </nav>
+            </div>
+            
+            <div class="announcement">
+                Dear all, Sales of software courses are handled by our partner 
+                <a href="https://zahanstore.com" class="zahan-link" target="_blank">Zahan Store®</a> 
+                effectively from August 2025. Please purchase course from there to get password 🔑 to access Fivespace LMS. Thank you!
+            </div>
+        </header>
+        
+        <main class="main">
+            <section class="hero">
+                <h2>Master Architectural Design Tools</h2>
+                <p>Professional courses with 15 video tutorials each. Learn from industry experts.</p>
+            </section>
+            
+            <section id="courses">
+                <!-- AutoCAD Course -->
+                <div class="course" id="autocad">
+                    <h3>AutoCAD Mastery</h3>
+                    <div class="videos">
+                        <!-- Video 1 -->
+                        <div class="video">
+                            <div class="video-thumb">
+                                <img src="autocad-thumb1.jpg" alt="AutoCAD Interface">
+                            </div>
+                            <div class="video-info">
+                                <h4>1. Interface Basics</h4>
+                                <p>Learn essential tools and workspace</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Video 2 -->
+                        <div class="video">
+                            <div class="video-thumb">
+                                <img src="autocad-thumb2.jpg" alt="2D Drafting">
+                            </div>
+                            <div class="video-info">
+                                <h4>2. 2D Drafting</h4>
+                                <p>Master lines and basic shapes</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Add remaining 13 videos -->
+                    </div>
+                </div>
+                
+                <!-- Add other courses here -->
+            </section>
+        </main>
+        
+        <footer>
+            <div class="footer-links">
+                <a href="#privacy">Privacy</a>
+                <a href="#terms">Terms</a>
+                <a href="#contact">Contact</a>
+                <a href="https://zahanstore.com" class="zahan-link" target="_blank">Zahan Store</a>
+            </div>
+            <p>Sales handled by <a href="https://zahanstore.com" class="zahan-link" target="_blank">Zahan Store®</a></p>
+            <p>© 2025 FiveSpace LMS. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Password Configuration
+        const PASSWORDS = {
+            main: "architecture2025", // Main site password
+            autocad: "autocad123",
+            photoshop: "psarch2025",
+            sketchup: "sk3tchup!",
+            revit: "revitBIM25",
+            rhino: "rh1n0CAD",
+            archicad: "archi2025"
+        };
+        
+        function checkPassword() {
+            const input = document.getElementById("passwordInput").value;
+            const errorMsg = document.getElementById("errorMsg");
+            
+            if (input === PASSWORDS.main) {
+                // Correct password - show content
+                document.getElementById("passwordScreen").style.display = "none";
+                document.getElementById("mainContent").style.display = "block";
+            } else {
+                // Wrong password - show error
+                errorMsg.style.display = "block";
+                document.getElementById("passwordInput").value = "";
+            }
+        }
+        
+        // Allow Enter key to submit password
+        document.getElementById("passwordInput").addEventListener("keyup", function(event) {
+            if (event.key === "Enter") {
+                checkPassword();
+            }
+        });
+        
+        // Course-specific password checks would go here
+        // (You'll need to implement these when adding course pages)
+    </script>
+</body>
+</html>
