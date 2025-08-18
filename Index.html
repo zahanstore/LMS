@@ -453,6 +453,10 @@
             .videos-scroll {
                 gap: 1.2rem;
             }
+    
+            .course {
+  scroll-margin-top: 100px; /* Adjust this value based on your header height */
+}
         }
     </style>
 </head>
@@ -833,6 +837,33 @@
         document.getElementById("coursePassword").addEventListener("keyup", function(e) {
             if (e.key === "Enter") checkCoursePassword();
         });
+
+       // Add this JavaScript right before the closing </body> tag
+       document.addEventListener('DOMContentLoaded', function() {
+       // Smooth scrolling for navigation links
+       document.querySelectorAll('nav a').forEach(anchor => {
+       anchor.addEventListener('click', function(e) {
+       e.preventDefault();
+      
+       const targetId = this.getAttribute('href');
+       const targetSection = document.querySelector(targetId);
+      
+      if (targetSection) {
+        // Calculate the position with header offset
+        const headerHeight = document.querySelector('header').offsetHeight;
+        const targetPosition = targetSection.offsetTop - headerHeight;
+        
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
+        });
+        
+        // Update URL without reloading
+        history.pushState(null, null, targetId);
+      }
+      });
+      });
+      });
     </script>
 </body>
 </html>
